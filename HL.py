@@ -25,11 +25,6 @@ table = 'employee'
 def home():
     return render_template('Home.html')
 
-@app.route("/addemp1", methods=['GET', 'POST'])
-def addemp1():
-    return render_template('Home.html')
-
-
 @app.route("/about", methods=['POST'])
 def about():
     return render_template('www.intellipaat.com')
@@ -99,35 +94,7 @@ def getInfo():
 
 
 
-@app.route("/fetchInfo", methods=['GET','POST'])
-def fetchInfo():
-    ID = request.form['emp_id']
-    mycursor = db_conn.cursor()
 
-    emp_id = "N/A"
-    emp_name = "N/A"
-    emp_payscale = "N/A"
-    emp_department = "N/A"
-    emp_hire_date = "N/A"
-
-    try:
-        mycursor.execute("SELECT * FROM employees WHERE emp_id = %s",[ID])
-
-        myresult = mycursor.fetchall()
-        for row in myresult:
-            emp_id = row[0]
-            emp_name = row[1]
-            emp_payscale = row[2]
-            emp_department = row[3]
-            emp_hire_date = row[4]
-            
-        return render_template('GetEmpOutput.html', id=emp_id, name=emp_name, payscale=emp_payscale, department=emp_department, hire_date=emp_hire_date)
-    
-    except Exception as e:
-        return render_template('GetEmpOutput.html', id=emp_id, name=emp_name, payscale=emp_payscale, department=emp_department, hire_date=emp_hire_date)
-
-    finally:
-        mycursor.close()
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
